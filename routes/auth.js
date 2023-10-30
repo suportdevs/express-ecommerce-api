@@ -42,13 +42,13 @@ router.post('/login', async (req, res) => {
         if(!match)res.status(401).send({message: "Password does not match"});
         
         const userData = {
-            userId: user._id,
-            userName: user.username,
-            userEmail: user.email,
-            userRole: user.role
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            role: user.role
         };
         const token = jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: '24h'});
-        res.status(200).send({message: "Login successfull.", eamil: user.email, token, userData});
+        res.status(200).send({message: "Login successfull.", token, ...userData});
     }catch(err){
         res.status(500).send(err);
     }
