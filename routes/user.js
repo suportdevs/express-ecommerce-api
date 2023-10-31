@@ -29,7 +29,7 @@ router.put('/:id', verifyToken, async (req, res) => {
 router.delete('/:id', verifyToken, async (req, res) => {
     if(req.user.id === req.params.id || req.user.role === 'Admin'){
         try{
-            await User.findByIdAndDelete(req.params.id);
+            await User.findByIdAndDelete({_id:req.params.id});
             res.status(200).json("User deleted successfull.");
         }catch(err){
             return res.status(500).json(err);

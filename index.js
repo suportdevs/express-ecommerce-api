@@ -10,11 +10,13 @@ app.use(cors());
 const dbConnection = require('./database/dbConnection');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
+const productRouter = require('./routes/product');
 
 dbConnection();
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
+app.use('/api/products', productRouter);
 app.use('/', (req, res) => {
     res.send("home page");
 });
