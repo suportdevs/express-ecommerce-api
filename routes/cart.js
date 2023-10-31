@@ -46,7 +46,7 @@ router.get('/find/:userId', verifyToken, async (req, res) => {
     }
 });
 
-// Get all Cart or new 10
+// Get all Carts
 router.get('/', verifyToken, async (req, res) => {
     try{
         const carts = await Cart.find();
