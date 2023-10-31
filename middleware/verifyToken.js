@@ -16,6 +16,16 @@ const verifyToken = (req, res, next) => {
     }
 }
 
+const verifyTokenAndAuthorization = (req, res, next) => {
+    verifyToken(req, res, () => {
+        if(req.user.id === req.params.id || req.user.role === 'Admin'){
+            next();
+        }else{
+            return res.status(401).json("You are not alowed to perform this action!");
+        }
+    })
+}
+
 const verifyTokenAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
         if(req.user.role === 'Admin'){
@@ -26,4 +36,4 @@ const verifyTokenAndAdmin = (req, res, next) => {
     })
 }
 
-module.exports = {verifyToken, verifyTokenAndAdmin};
+module.exports = {verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin};
