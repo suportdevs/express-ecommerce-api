@@ -14,7 +14,7 @@ const userRouter = require('./routes/user');
 dbConnection();
 
 app.use('/api/auth', authRouter);
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 app.use('/', (req, res) => {
     res.send("home page");
 });
