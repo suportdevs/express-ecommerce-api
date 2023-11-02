@@ -13,6 +13,7 @@ const userRouter = require('./routes/user');
 const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const orderRouter = require('./routes/order');
+const stripeRouter = require('./routes/stripe');
 
 dbConnection();
 
@@ -21,6 +22,7 @@ app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/stripe', stripeRouter);
 app.use('/', (req, res) => {
     res.send("home page");
 });
