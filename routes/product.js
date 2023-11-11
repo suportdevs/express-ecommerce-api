@@ -1,7 +1,6 @@
 const { verifyTokenAndAdmin } = require('../middleware/verifyToken');
-const Product = require('../models/Product');
-
 const router = require('express').Router();
+const Product = require('../models/Product');
 
 // Create Product
 router.post('/', verifyTokenAndAdmin, async (req, res) => {
@@ -60,7 +59,7 @@ router.get('/', async (req, res) => {
         }else{
             products = await Product.find();
         }
-        res.status(200).json(products);
+        return res.status(200).json({products});
     }catch(err){
         return res.status(500).json(err);
     }
