@@ -5,9 +5,10 @@ const productSchema = mongoose.Schema({
     description: {type: String},
     image: {type: String, required:true},
     categories:{type: Array},
-    size: {type: String},
-    color: {type:String},
+    size: {type: Array},
+    color: {type:Array},
     rate: {type: Number},
+    isStock: {type: Boolean, default: true},
 }, {timestamps: true});
 
 module.exports = mongoose.model("Product", productSchema);

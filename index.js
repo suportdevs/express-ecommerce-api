@@ -22,7 +22,7 @@ app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use('/api/orders', orderRouter);
-app.use('/api/stripe', stripeRouter);
+app.use('/api/checkout', stripeRouter);
 app.use('/', (req, res) => {
     res.send("home page");
 });
