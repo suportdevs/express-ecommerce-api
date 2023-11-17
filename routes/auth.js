@@ -9,10 +9,10 @@ router.get('/', (req, res) => {
 
 // Register
 router.post('/register', async (req, res) => {
-    const {username, email, password} = req.body;
+    const {firstname, lastname, username, email, password} = req.body;
     try{
         await bcrypt.hash(password, 10).then(hashedPassword => {
-            const user = new User({username, email, password: hashedPassword});
+            const user = new User({firstname, lastname, username, email, password: hashedPassword});
             user.save().then(result => {
                 return res.status(201).send({
                     message: "User Created Successfully",
