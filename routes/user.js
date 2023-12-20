@@ -53,7 +53,7 @@ router.get('/find/:id', async (req, res) => {
 // Get all user or new 10
 router.get('/', verifyToken, async (req, res) => {
     const query = req.query.new;
-    if(req.user.role === 'Admin'){
+    if(req.user?.role === 'Admin'){
         try{
             const users = query ? await User.find().sort({_id: -1}).limit(10) : await User.find();
             res.status(200).json(users);
