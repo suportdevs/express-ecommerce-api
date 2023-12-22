@@ -58,22 +58,35 @@ router.get('/', verifyTokenAndAdmin, async (req, res) => {
 
 // Get income stats
 router.get('/income', verifyToken, async (req, res) => {
-    const date = new Date();
-    const lastMonth = new Date(date.setMonth(date.getMonth() -1));
-    const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() -1));
     try{
+         const currentDate = new Date();
+         const lastMonth = new Date(currentDate.setMonth(currentDate.getMonth() -1));
+         const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() -1));
+
+         console.log(lastMonth)
         const income = await Order.aggregate([
-            {$match: {createdAt: {$gte: previousMonth}}},
-            {$project: {
-                month: {$month: "$createdAt"},
-                sales: "$amount",
-            }},
-            {$group: {
-                _id: "$month",
-                total: {$sum: "$sales"},
-            }}
-        ])
-        res.status(200).json(income);
+            {
+                $match: {
+                    createdAt: {
+                        $gte: lastMonth
+                    }
+                }
+            },
+            {
+                $project: {
+                    month: {$month: "$createdAt"},
+                    sales: "$amount",
+                }
+            },
+            {
+                $group: {
+                    _id: "$month",
+                    total: {$sum: "$sales"},
+                }
+            }
+        ]);
+        console.log(income);
+        return res.status(200).json(income);
     }catch(err){
         return res.status(500).json(err);
     }
