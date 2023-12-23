@@ -61,9 +61,8 @@ router.get('/income', verifyToken, async (req, res) => {
     try{
          const currentDate = new Date();
          const lastMonth = new Date(currentDate.setMonth(currentDate.getMonth() -1));
-         const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() -1));
+        //  const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() -1));
 
-         console.log(lastMonth)
         const income = await Order.aggregate([
             {
                 $match: {
@@ -85,7 +84,6 @@ router.get('/income', verifyToken, async (req, res) => {
                 }
             }
         ]);
-        console.log(income);
         return res.status(200).json(income);
     }catch(err){
         return res.status(500).json(err);
