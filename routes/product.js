@@ -1,16 +1,21 @@
 const { verifyTokenAndAdmin } = require('../middleware/verifyToken');
 const router = require('express').Router();
 const Product = require('../models/Product');
+const upload = require('../utilies/imageUpload');
 
 // Create Product
-router.post('/', async (req, res) => {
-        const newProduct = new Product(req.body);
-        try{
-            const savedProduct = await newProduct.save();
-            return res.status(200).json(savedProduct);
-        }catch(err){
-            res.status(500).json(err);
-        }
+router.post('/', upload.single('image'), async (req, res) => {
+    const imageFile = req.file;
+    const {name,description, categories, sizes, colors, inStock, rate} = req.body;
+    console.log(imageFile)
+    console.log(req.body);
+    try{
+        const newProduct = new Product({name, description, categories, colors, sizes, isStock: inStock, rate, image: imageFile ? imageFile.filename : null});
+        const savedProduct = await newProduct.save();
+        return res.status(200).json(savedProduct);
+    }catch(err){
+        res.status(500).json(err);
+    }
 });
 // Update Product
 router.put('/:id', verifyTokenAndAdmin, async (req, res) => {
